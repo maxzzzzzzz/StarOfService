@@ -1,0 +1,9 @@
+C:\softserve\aspmvcWeb\WebOrderingServiceApp\Converter\bin\Debug\Converter.dll
+C:\softserve\aspmvcWeb\WebOrderingServiceApp\Converter\bin\Debug\Converter.pdb
+C:\softserve\aspmvcWeb\WebOrderingServiceApp\Converter\bin\Debug\Newtonsoft.Json.dll
+C:\softserve\aspmvcWeb\WebOrderingServiceApp\Converter\bin\Debug\Newtonsoft.Json.xml
+C:\softserve\aspmvcWeb\WebOrderingServiceApp\Converter\obj\Debug\Converter.csprojAssemblyReference.cache
+C:\softserve\aspmvcWeb\WebOrderingServiceApp\Converter\obj\Debug\Converter.csproj.CoreCompileInputs.cache
+C:\softserve\aspmvcWeb\WebOrderingServiceApp\Converter\obj\Debug\Converter.csproj.CopyComplete
+C:\softserve\aspmvcWeb\WebOrderingServiceApp\Converter\obj\Debug\Converter.dll
+C:\softserve\aspmvcWeb\WebOrderingServiceApp\Converter\obj\Debug\Converter.pdb

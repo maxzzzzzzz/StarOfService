@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Models.ServiceIndustryType>
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<h2>Index</h2>
+@if (User.IsInRole("admin"))
+{
+    <p>@Html.ActionLink("Add new ServiceType", "Create", null, new { @class = "btn btn-default" })</p>
+}
+
+<div class="container">
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+            <input type="text" id="Search" placeholder="Search" class="form-control" />
+        </div>
+    </div>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiceIndustryTypePhoto)
+        </th>
+        <th>
+            @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="Search">
+            <td>
+                <a href="@Url.Action("Index", "ServiceIndustry", new { id = item.ServiceIndustryTypeId })"><img src="@Url.Content(item.ServiceIndustryTypePhoto)" width="100" height="100"/></a>
+                @*<img src="@Url.Content(item.ServiceIndustryTypePhoto)" id="profile-image1" class="img-circle img-responsive" style=" width:auto">*@
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Name)*@
+                @Html.ActionLink(item.Name, "Index", "ServiceIndustry", new { id = item.ServiceIndustryTypeId }, null)
+            </td>
+
+            <td>
+                @if (User.IsInRole("admin"))
+                {
+                    <a href="@Url.Action("Edit", "ServiceIndustryType", new { id = item.ServiceIndustryTypeId })" class="btn btn-default"><span class="glyphicon glyphicon-edit" aria-hidden="true">Edit</span></a>
+                    <a href="@Url.Action("Delete", "ServiceIndustryType", new { id = item.ServiceIndustryTypeId})" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true">Delete</span></a>
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.ServiceIndustryTypeId })*@
+                    @*@Html.ActionLink("Delete", "ServiceIndustryType", new { id = item.ServiceIndustryTypeId })*@
+                }
+                @*@Html.ActionLink("Show","Index", "ServiceIndustry", new { id = item.ServiceIndustryTypeId },null)*@
+            </td>
+
+        </tr>
+    }
+
+</table>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/search.js"></script>

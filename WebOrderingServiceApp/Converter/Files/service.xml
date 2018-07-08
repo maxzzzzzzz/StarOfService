@@ -1,0 +1,65 @@
+﻿<services>
+  <service>
+    <serviceId>1</serviceId>
+    <name>IT</name>
+    <executor>
+      <ex>
+        <dateTime>2015, 1, 18</dateTime>
+        <price>2000</price>
+        <user>
+          <userId>1</userId>
+          <firstName>Case</firstName>
+          <lastName>Conley</lastName>
+          <userName>Mcgee</userName>
+          <email>casemcgee@gmail.com</email>
+          <phoneNumber>+38 (050) 555-3967</phoneNumber>
+        </user>
+      </ex>
+      <ex>
+        <dateTime>2011, 1, 18</dateTime>
+        <price>2500</price>
+        <user>
+          <userId>2</userId>
+          <firstName>Lenora</firstName>
+          <lastName>Carpenter</lastName>
+          <userName>Peters</userName>
+          <email>lenorapeters@gmail.com</email>
+          <phoneNumber>+38 (095) 483-3343</phoneNumber>
+        </user>
+      </ex>
+    </executor>
+    <description>ios developing</description>
+  </service>
+
+  <service>
+   <serviceId>2</serviceId>
+   <name>Building</name>
+   <executor>
+      <ex>
+         <dateTime>2000, 1, 18</dateTime>
+         <price>1800</price>
+         <user>
+          <userId>3</userId>
+          <firstName>Caroline</firstName>
+          <lastName>Guerra</lastName>
+          <userName>Horne</userName>
+          <email>carolinehorne@gmail.com</email>
+          <phoneNumber>+38 (066) 527-3768</phoneNumber>
+         </user>
+      </ex>
+      <ex>
+         <dateTime>2004, 1, 18</dateTime>
+         <price>2000</price>
+         <user>
+          <userId>4</userId>
+          <firstName>Ortiz</firstName>
+          <lastName>Dale</lastName>
+          <userName>Harmon</userName>
+          <email>ortizharmon@gmail.com</email>
+          <phoneNumber>+38 (067) 507-3704</phoneNumber> 
+         </user>
+      </ex>
+   </executor>
+   <description>site proecting</description>
+  </service>
+</services>

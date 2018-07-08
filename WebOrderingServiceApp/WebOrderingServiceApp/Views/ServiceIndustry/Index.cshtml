@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Models.ServiceIndustry>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@if (User.IsInRole("admin"))
+{
+    <p>
+        @Html.ActionLink("Add new service", "Create", null, new { @class = "btn btn-default" })
+    </p>
+}
+    <div class="container">
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                <input type="text" id="Search" placeholder="Search" class="form-control" />
+            </div>
+        </div>
+    </div>
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="Search">
+
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Name)*@
+                @Html.ActionLink(item.Name, "Index", "Executor", new { id = item.ServiceIndustryId }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            @if (User.IsInRole("admin"))
+            {
+            <td>
+                <a href="@Url.Action("Edit", "ServiceIndustry", new { id = item.ServiceIndustryId })" class="btn btn-default"><span class="glyphicon glyphicon-edit" aria-hidden="true">Edit</span></a>
+                <a href="@Url.Action("Delete", "ServiceIndustry", new { id = item.ServiceIndustryId})" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true">Delete</span></a>
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.ServiceIndustryId }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.ServiceIndustryId })*@
+            </td>
+            }
+        </tr>
+    }
+
+</table>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/search.js"></script>

@@ -1,0 +1,73 @@
+﻿[
+  {
+    "serviceIndustryId": 1,
+    "name": "IT",
+    "description": "IT",
+    "executors": [
+      {
+        "executorId": 1,
+        "price": 2000,
+        "dateTime": "2020, 1, 18",
+        "user": {
+          "userId": 1,
+          "firstName": "",
+          "lastName": "Conley Abb",
+          "userName": "Mcgee",
+          "email": "casemcgee@gmail.com",
+          "phoneNumber": "+38 (050) 555-3967",
+          "imagePath": "conley.jpg"
+        }
+      },
+      {
+        "executorId": 2,
+        "price": 2500,
+        "dateTime": "2020, 1, 18",
+        "user": {
+          "userId": 1,
+          "firstName": "Case",
+          "lastName": "Conley      Abb",
+          "userName": "Mcgee",
+          "email": "casemcgee@gmail.com",
+          "phoneNumber": "+38 (050) 555-3967",
+          "imagePath": "conley.dsa"
+        }
+      }
+    ]
+  },
+  {
+    "serviceIndustryId": 2,
+    "name": "Building",
+    "description": "site proecting",
+    "executors": [
+      {
+        "executorId": 3,
+        "price": 1800,
+        "dateTime": "2000, 1, 18",
+        "user": {
+          "userId": 3,
+          "firstName": "Caroline",
+          "lastName": "Guerra",
+          "userName": "fg",
+          "email": "carolinehorne@gmail.com",
+          "phoneNumber": "+38 (066) 527-3768",
+          "imagePath": "caroline.png"
+        }
+      },
+      {
+        "executorId": 4,
+        "price": 2000,
+        "dateTime": "2004, 1, 18",
+        "user": {
+          "userId": 4,
+          "firstName": "Ortiz",
+          "lastName": "Dale",
+          "userName": "Harmon",
+          "email": "ortizharmon@gmail.com",
+          "phoneNumber": "+38 (067) 507-3704",
+          "imagePath": "ortiz.jpg"
+        }
+
+      }
+    ]
+  }
+]
