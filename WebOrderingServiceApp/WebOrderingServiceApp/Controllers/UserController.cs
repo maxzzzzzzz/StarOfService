@@ -15,6 +15,7 @@ using WebOrderingServiceApp.Models;
 namespace WebOrderingServiceApp.Controllers
 {
     [Authorize]
+    [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
     public class UserController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -113,7 +114,6 @@ namespace WebOrderingServiceApp.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public async Task<ActionResult> Edit(User user, HttpPostedFileBase ImageFile)
         {
             
@@ -145,7 +145,7 @@ namespace WebOrderingServiceApp.Controllers
             }
             return View(user);
         }
-        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
+
         [CustomAuthorize(Roles = "admin")]
         public ActionResult GetAllUsers(string sortOrder)
         {

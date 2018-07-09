@@ -1,10 +1,11 @@
-﻿@model IEnumerable<Models.Executor>
+﻿@model PagedList.IPagedList<Models.Executor>
 
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<h2>Executors</h2>
 
 <div class="container">
     <div class="form-group">
@@ -17,13 +18,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.User.Email)
+            Email
         </th>
         <th>
-            @Html.ActionLink("Price", "Index", new { sortOrder = ViewBag.PriceSortParm })
+            @Html.ActionLink("Price", "Index", new { sortOrder = ViewBag.PriceSortParm,page=Model.PageNumber })
         </th>
         <th>
-            @Html.ActionLink("DateTime", "Index", new { sortOrder = ViewBag.DateSortParm })
+            @Html.ActionLink("DateTime", "Index", new { sortOrder = ViewBag.DateSortParm, page = Model.PageNumber })
         </th>
         <th></th>
     </tr>
@@ -42,15 +43,19 @@
             </td>
             @if (User.IsInRole("admin"))
             {
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ServiceIndustryId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ServiceIndustryId })
-                </td>
+            <td>
+                <a href="@Url.Action("Delete", "Executor", new { id = item.ExecutorId})" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true">Delete</span></a>
+            </td>
             }
 
         </tr>
     }
 
 </table>
+<br />
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/search.js"></script>

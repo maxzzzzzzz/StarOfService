@@ -5,7 +5,13 @@
 }
 
 <h2>GetAllUsers</h2>
-
+<link href="~/Content/bootstrap.css" rel="stylesheet"/>
+<style>
+    td {
+        padding: 5px;
+        padding-right: 30px;
+    }
+</style>
 <div class="container">
     <div class="form-group">
         <div class="input-group">
@@ -15,7 +21,7 @@
     </div>
 </div>
 <table>
-    <tr class="Search">
+    <tr class="Search" >
         <th>@Html.ActionLink("User", "GetAllUsers", new { sortOrder = ViewBag.NameSortParm })</th>
         <th>
             Photo
@@ -34,7 +40,9 @@
         <tr class="Search">
             <td>@Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)</td>
             <td>
-                <img src="@Url.Content(item.Image)" class="img-circle"height="105" width="80" multiple />
+                <img src="@Url.Content(item.Image)"  class="img-circle" style="width: 100px;
+        height: 100px;
+        border: 2px solid #808080;" multiple />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)

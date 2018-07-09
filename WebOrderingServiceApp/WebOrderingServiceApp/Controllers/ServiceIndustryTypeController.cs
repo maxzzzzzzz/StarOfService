@@ -12,6 +12,7 @@ using WebOrderingServiceApp.Models;
 
 namespace WebOrderingServiceApp.Controllers
 {
+    [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
     public class ServiceIndustryTypeController : Controller
     {
         ServiceIndustryTypeRepository serviceIndustryTypeRepository = new ServiceIndustryTypeRepository();
@@ -37,7 +38,6 @@ namespace WebOrderingServiceApp.Controllers
             }
         }
         [CustomAuthorize(Roles = "admin")]
-        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Create()
         {
             return View();
@@ -45,7 +45,6 @@ namespace WebOrderingServiceApp.Controllers
 
         [HttpPost]
         [CustomAuthorize(Roles = "admin")]
-        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Create(ServiceIndustryType serviceIndustryType, HttpPostedFileBase ImageFile)
         {
 
@@ -53,7 +52,7 @@ namespace WebOrderingServiceApp.Controllers
             {
                 if (ImageFile == null)
                 {
-                    serviceIndustryType.ServiceIndustryTypePhoto = @"~/Image/ServicesPhotos/simple.jpg";
+                    serviceIndustryType.ServiceIndustryTypePhoto = @"~/Image/ServicesPhotos/simple.png";
                     serviceIndustryTypeRepository.Create(serviceIndustryType);
                     return RedirectToAction("Index");
                 }
@@ -74,7 +73,6 @@ namespace WebOrderingServiceApp.Controllers
         }
 
         [CustomAuthorize(Roles = "admin")]
-        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -94,7 +92,6 @@ namespace WebOrderingServiceApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         [CustomAuthorize(Roles = "admin")]
         public ActionResult Edit(ServiceIndustryType serviceIndustryType, HttpPostedFileBase ImageFile)
         {
@@ -122,7 +119,7 @@ namespace WebOrderingServiceApp.Controllers
             }
             return View(serviceIndustryType);
         }
-        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
+
         [CustomAuthorize(Roles = "admin")]
         public ActionResult Delete(int? id)
         {
@@ -142,7 +139,6 @@ namespace WebOrderingServiceApp.Controllers
         }
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         [CustomAuthorize(Roles = "admin")]
         public ActionResult DeleteConfirmed(int id)
         {

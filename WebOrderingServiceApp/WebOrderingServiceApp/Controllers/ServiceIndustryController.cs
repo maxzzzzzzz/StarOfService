@@ -10,6 +10,7 @@ using WebOrderingServiceApp.Models;
 
 namespace WebOrderingServiceApp.Controllers
 {
+    [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
     public class ServiceIndustryController : Controller
     {
         ServiceIndustryRepository serviceIndustryRepository = new ServiceIndustryRepository();
@@ -22,8 +23,9 @@ namespace WebOrderingServiceApp.Controllers
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             using (ApplicationContext db = new ApplicationContext())
             {
-                var servcieIndustries = from s in db.ServiceIndustries.Where(item => item.ServiceIndustryTypeId == id)
+                var servcieIndustries = from s in db.ServiceIndustries.Include("ServiceIndustryType").Where(item => item.ServiceIndustryTypeId == id)
                     select s;
+                //ViewBag.ServiceIndustryTypeName = db.ServiceIndustries.Include("ServiceIndustryType").FirstOrDefault(item => item.ServiceIndustryTypeId == id).ServiceIndustryType.Name;
                 switch (sortOrder)
                 {
                     case "name_desc":
@@ -48,7 +50,7 @@ namespace WebOrderingServiceApp.Controllers
                 ViewBag.ServiceIndustryTypeId = new SelectList(serviceIndustryTypeRepository.GetAll(), "ServiceIndustryTypeId", "Name", ServiceIndustryTypeId);
 
         }
-        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
+
         [CustomAuthorize(Roles = "admin")]
         public ActionResult Create()
         {
@@ -57,7 +59,6 @@ namespace WebOrderingServiceApp.Controllers
         }
 
         [HttpPost]
-        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         [CustomAuthorize(Roles = "admin")]
         public ActionResult Create(ServiceIndustry serviceIndustry)
         {
@@ -73,7 +74,7 @@ namespace WebOrderingServiceApp.Controllers
             return View(serviceIndustry);
             
         }
-        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
+
         [CustomAuthorize(Roles = "admin")]
         public ActionResult Edit(int? id)
         {
@@ -95,7 +96,6 @@ namespace WebOrderingServiceApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         [CustomAuthorize(Roles = "admin")]
         public ActionResult Edit(ServiceIndustry serviceIndustry)
         {
@@ -108,7 +108,7 @@ namespace WebOrderingServiceApp.Controllers
             SetTypeViewBag(serviceIndustry.ServiceIndustryTypeId);
             return View(serviceIndustry);
         }
-        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
+
         [CustomAuthorize(Roles = "admin")]
         public ActionResult Delete(int? id)
         {
@@ -128,7 +128,6 @@ namespace WebOrderingServiceApp.Controllers
         }
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         [CustomAuthorize(Roles = "admin")]
         public ActionResult DeleteConfirmed(int id)
         {

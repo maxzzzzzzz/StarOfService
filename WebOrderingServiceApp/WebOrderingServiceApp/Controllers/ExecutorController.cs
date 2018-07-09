@@ -9,10 +9,12 @@ using DAL;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Models;
+using PagedList;
 using WebOrderingServiceApp.Models;
 
 namespace WebOrderingServiceApp.Controllers
 {
+    [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
     public class ExecutorController : Controller
     {
         ExecutorRepository executorRepository = new ExecutorRepository();
@@ -50,7 +52,7 @@ namespace WebOrderingServiceApp.Controllers
             }
         }
         // GET: Executor
-        public ActionResult Index(int id, string sortOrder)
+        public ActionResult Index(int id, string sortOrder, int? page)
         {
             //var executors = executorRepository.GetAll().Where(item => item.ServiceIndustryId == id);
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
@@ -74,12 +76,50 @@ namespace WebOrderingServiceApp.Controllers
                         executors = executors.OrderByDescending(s => s.DateTime);
                         break;
                     default:
-                        executors = executors.OrderBy(s => s.ServiceIndustry.Name);
+                        executors = executors.OrderByDescending(s => s.ServiceIndustry.Name);
                         break;
                 }
-                return View(executors.ToList());
+                int pageSize = 5;
+                int pageNumber = (page ?? 1);
+                return View(executors.ToPagedList(pageNumber, pageSize));
             }
         }
+        public ActionResult GetAllExecutors(string sortOrder, int? page)
+        {
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewBag.PriceSortParm = sortOrder == "Price" ? "price_desc" : "Price";
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                var executors = from s in db.Executors.Include("ServiceIndustry").Include("User")
+                                select s;
+                switch (sortOrder)
+                {
+                    case "name_desc":
+                        executors = executors.OrderBy(s => s.ServiceIndustry.Name);
+                        break;
+                    case "Price":
+                        executors = executors.OrderBy(s => s.Price);
+                        break;
+                    case "price_desc":
+                        executors = executors.OrderByDescending(s => s.Price);
+                        break;
+                    case "Date":
+                        executors = executors.OrderBy(s => s.DateTime);
+                        break;
+                    case "date_desc":
+                        executors = executors.OrderByDescending(s => s.DateTime);
+                        break;
+                    default:
+                        executors = executors.OrderByDescending(s => s.ServiceIndustry.Name);
+                        break;
+                }
+                int pageSize = 7;
+                int pageNumber = (page ?? 1);
+                return View(executors.ToPagedList(pageNumber, pageSize));
+            }
+        }
+        [Authorize]
         public ActionResult Create()
         {
             SetServiceViewBag();
@@ -98,6 +138,7 @@ namespace WebOrderingServiceApp.Controllers
 
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> Create(Executor executor)
         {
@@ -106,15 +147,16 @@ namespace WebOrderingServiceApp.Controllers
             {
                 executor.UserId = user.Id;
                 executor.DateTime = DateTime.Now;
-                SetServiceViewBag(executor.ServiceIndustryId);
                 executorRepository.Create(executor);
 
                 return RedirectToAction("Index","ServiceIndustryType");
             }
+            SetServiceViewBag(executor.ServiceIndustryId);
             //SetServiceViewBag(executor.ServiceIndustryId);
             return View(executor);
        
         }
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -134,6 +176,7 @@ namespace WebOrderingServiceApp.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Executor executor)
         {
@@ -148,6 +191,7 @@ namespace WebOrderingServiceApp.Controllers
         }
 
         // GET: /Movies/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -166,6 +210,7 @@ namespace WebOrderingServiceApp.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {

@@ -33,9 +33,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="@Url.Action("Index", "ServiceIndustryType")">Home</a></li>
+                    <li class="active"><a href="@Url.Action("Index", "ServiceIndustryType")">Services</a></li>
                     <li><a href="@Url.Action("About", "Home")">About</a></li>
                     <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
+                    <li><a href="@Url.Action("GetAllExecutors", "Executor")">All Executors</a></li>
                     @if (User.IsInRole("admin"))
                     {
                         <li class="dropdown">

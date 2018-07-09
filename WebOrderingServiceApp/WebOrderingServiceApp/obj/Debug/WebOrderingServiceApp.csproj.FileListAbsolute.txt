@@ -171,3 +171,7 @@ C:\softserve\aspmvcWeb\WebOrderingServiceApp\WebOrderingServiceApp\bin\Microsoft
 C:\softserve\aspmvcWeb\WebOrderingServiceApp\WebOrderingServiceApp\bin\Microsoft.Net.Http.Headers.xml
 C:\softserve\aspmvcWeb\WebOrderingServiceApp\WebOrderingServiceApp\bin\Converter.dll
 C:\softserve\aspmvcWeb\WebOrderingServiceApp\WebOrderingServiceApp\bin\Converter.pdb
+C:\softserve\aspmvcWeb\WebOrderingServiceApp\WebOrderingServiceApp\bin\PagedList.dll
+C:\softserve\aspmvcWeb\WebOrderingServiceApp\WebOrderingServiceApp\bin\PagedList.Mvc.dll
+C:\softserve\aspmvcWeb\WebOrderingServiceApp\WebOrderingServiceApp\bin\PagedList.xml
+C:\softserve\aspmvcWeb\WebOrderingServiceApp\WebOrderingServiceApp\bin\PagedList.Mvc.xml

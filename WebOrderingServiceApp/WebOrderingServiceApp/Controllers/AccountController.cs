@@ -13,6 +13,7 @@ using System.Security.Claims;
 
 namespace WebOrderingServiceApp.Controllers
 {
+    [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
     public class AccountController : Controller
     {
         /*private ApplicationUserManager UserManager
