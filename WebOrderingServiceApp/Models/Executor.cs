@@ -12,7 +12,7 @@ namespace Models
     {
         [Key]
         public int ExecutorId { get; set; }
-        [Required]
+
         public double Price { get; set; }
         //[Required]
         public DateTime DateTime { get; set; }

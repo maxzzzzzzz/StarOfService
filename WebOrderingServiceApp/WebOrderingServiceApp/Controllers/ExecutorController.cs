@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using DAL;
+using DAL.Interfaces;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Models;
@@ -17,11 +18,15 @@ namespace WebOrderingServiceApp.Controllers
     [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
     public class ExecutorController : Controller
     {
-        ExecutorRepository executorRepository = new ExecutorRepository();
-        ServiceIndustryRepository serviceIndustryRepository = new ServiceIndustryRepository();
+        IRepository<Executor> repository;
+        IRepository<ServiceIndustry> repositoryServiceIndutsry;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        public ExecutorController() { }
+        public ExecutorController(IRepository<Executor> repo, IRepository<ServiceIndustry> repoServ)
+        {
+            repository = repo;
+            repositoryServiceIndutsry = repoServ;
+        }
         public ExecutorController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
@@ -130,11 +135,11 @@ namespace WebOrderingServiceApp.Controllers
 
             if (ServiceIndustryId == null)
 
-                ViewBag.ServiceIndustryId = new SelectList(serviceIndustryRepository.GetAll(), "ServiceIndustryId", "Name");
+                ViewBag.ServiceIndustryId = new SelectList(repositoryServiceIndutsry.GetAll(), "ServiceIndustryId", "Name");
 
             else
 
-                ViewBag.ServiceIndustryId = new SelectList(serviceIndustryRepository.GetAll(), "ServiceIndustryId", "Name", ServiceIndustryId);
+                ViewBag.ServiceIndustryId = new SelectList(repositoryServiceIndutsry.GetAll(), "ServiceIndustryId", "Name", ServiceIndustryId);
 
         }
 
@@ -147,7 +152,7 @@ namespace WebOrderingServiceApp.Controllers
             {
                 executor.UserId = user.Id;
                 executor.DateTime = DateTime.Now;
-                executorRepository.Create(executor);
+                repository.Create(executor);
 
                 return RedirectToAction("Index","ServiceIndustryType");
             }
@@ -165,7 +170,7 @@ namespace WebOrderingServiceApp.Controllers
             }
             else
             {
-                var executor = executorRepository.FindById(id);
+                var executor = repository.FindById(id);
                 if (executor == null)
                 {
                     return HttpNotFound();
@@ -183,7 +188,7 @@ namespace WebOrderingServiceApp.Controllers
             if (ModelState.IsValid)
             {
                 executor.DateTime = DateTime.Now;
-                executorRepository.Update(executor);
+                repository.Update(executor);
                 return RedirectToAction("Index","User");
             }
             SetServiceViewBag(executor.ServiceIndustryId);
@@ -200,7 +205,7 @@ namespace WebOrderingServiceApp.Controllers
             }
             else
             {
-                var executor = executorRepository.FindById(id);
+                var executor = repository.FindById(id);
                 if (executor == null)
                 {
                     return HttpNotFound();
@@ -214,8 +219,8 @@ namespace WebOrderingServiceApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var executor = executorRepository.FindById(id);
-            executorRepository.Delete(executor.ExecutorId);
+            var executor = repository.FindById(id);
+            repository.Delete(executor.ExecutorId);
             return RedirectToAction("Index", "User");
         }
     }

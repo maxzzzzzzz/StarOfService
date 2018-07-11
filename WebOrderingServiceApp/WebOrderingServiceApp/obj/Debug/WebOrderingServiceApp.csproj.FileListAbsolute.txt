@@ -175,3 +175,11 @@ C:\softserve\aspmvcWeb\WebOrderingServiceApp\WebOrderingServiceApp\bin\PagedList
 C:\softserve\aspmvcWeb\WebOrderingServiceApp\WebOrderingServiceApp\bin\PagedList.Mvc.dll
 C:\softserve\aspmvcWeb\WebOrderingServiceApp\WebOrderingServiceApp\bin\PagedList.xml
 C:\softserve\aspmvcWeb\WebOrderingServiceApp\WebOrderingServiceApp\bin\PagedList.Mvc.xml
+C:\softserve\aspmvcWeb\WebOrderingServiceApp\WebOrderingServiceApp\bin\Ninject.dll
+C:\softserve\aspmvcWeb\WebOrderingServiceApp\WebOrderingServiceApp\bin\Ninject.Web.Common.dll
+C:\softserve\aspmvcWeb\WebOrderingServiceApp\WebOrderingServiceApp\bin\Ninject.Web.Common.WebHost.dll
+C:\softserve\aspmvcWeb\WebOrderingServiceApp\WebOrderingServiceApp\bin\Ninject.Web.Mvc.dll
+C:\softserve\aspmvcWeb\WebOrderingServiceApp\WebOrderingServiceApp\bin\Ninject.xml
+C:\softserve\aspmvcWeb\WebOrderingServiceApp\WebOrderingServiceApp\bin\Ninject.Web.Common.xml
+C:\softserve\aspmvcWeb\WebOrderingServiceApp\WebOrderingServiceApp\bin\Ninject.Web.Common.WebHost.xml
+C:\softserve\aspmvcWeb\WebOrderingServiceApp\WebOrderingServiceApp\bin\Ninject.Web.Mvc.xml

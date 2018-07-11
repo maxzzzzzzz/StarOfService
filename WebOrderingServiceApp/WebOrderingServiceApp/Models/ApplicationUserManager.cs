@@ -22,6 +22,12 @@ namespace WebOrderingServiceApp.Models
         {
             ApplicationContext db = context.Get<ApplicationContext>();
             ApplicationUserManager manager = new ApplicationUserManager(new UserStore<User>(db));
+            manager.UserValidator = new UserValidator<User>(manager)
+            {
+                AllowOnlyAlphanumericUserNames = false,
+                RequireUniqueEmail = true,
+                
+            };
             return manager;
         }
     }

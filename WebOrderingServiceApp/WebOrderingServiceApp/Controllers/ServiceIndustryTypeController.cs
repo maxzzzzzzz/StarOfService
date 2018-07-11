@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using DAL;
+using DAL.Interfaces;
 using Models;
 using WebOrderingServiceApp.Models;
 
@@ -15,7 +16,11 @@ namespace WebOrderingServiceApp.Controllers
     [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
     public class ServiceIndustryTypeController : Controller
     {
-        ServiceIndustryTypeRepository serviceIndustryTypeRepository = new ServiceIndustryTypeRepository();
+        IRepository<ServiceIndustryType> repository;
+        public ServiceIndustryTypeController(IRepository<ServiceIndustryType> repo)
+        {
+            repository = repo;
+        }
         // GET: ServiceIndustryType
         public ActionResult Index(string sortOrder)
         {
@@ -53,7 +58,7 @@ namespace WebOrderingServiceApp.Controllers
                 if (ImageFile == null)
                 {
                     serviceIndustryType.ServiceIndustryTypePhoto = @"~/Image/ServicesPhotos/simple.png";
-                    serviceIndustryTypeRepository.Create(serviceIndustryType);
+                    repository.Create(serviceIndustryType);
                     return RedirectToAction("Index");
                 }
                 else
@@ -64,7 +69,7 @@ namespace WebOrderingServiceApp.Controllers
                     serviceIndustryType.ServiceIndustryTypePhoto = "~/Image/ServicesPhotos/" + fileName;
                     fileName = Path.Combine(Server.MapPath("~/Image/ServicesPhotos/"), fileName);
                     ImageFile.SaveAs(fileName);
-                    serviceIndustryTypeRepository.Create(serviceIndustryType);
+                    repository.Create(serviceIndustryType);
                     return RedirectToAction("Index");
                 }
                 
@@ -81,7 +86,7 @@ namespace WebOrderingServiceApp.Controllers
             }
             else
             {
-                var serviceIndustryType = serviceIndustryTypeRepository.FindById(id);
+                var serviceIndustryType = repository.FindById(id);
                 if (serviceIndustryType == null)
                 {
                     return HttpNotFound();
@@ -95,14 +100,14 @@ namespace WebOrderingServiceApp.Controllers
         [CustomAuthorize(Roles = "admin")]
         public ActionResult Edit(ServiceIndustryType serviceIndustryType, HttpPostedFileBase ImageFile)
         {
-            var service = serviceIndustryTypeRepository.FindById(serviceIndustryType.ServiceIndustryTypeId);
+            var service = repository.FindById(serviceIndustryType.ServiceIndustryTypeId);
             var photo = service.ServiceIndustryTypePhoto;
             if (ModelState.IsValid)
             {
                 if (ImageFile == null)
                 {
                     serviceIndustryType.ServiceIndustryTypePhoto = photo;
-                    serviceIndustryTypeRepository.Update(serviceIndustryType);
+                    repository.Update(serviceIndustryType);
                     return RedirectToAction("Index");
                 }
                 else
@@ -113,7 +118,7 @@ namespace WebOrderingServiceApp.Controllers
                     serviceIndustryType.ServiceIndustryTypePhoto = "~/Image/ServicesPhotos/" + fileName;
                     fileName = Path.Combine(Server.MapPath("~/Image/ServicesPhotos/"), fileName);
                     ImageFile.SaveAs(fileName);
-                    serviceIndustryTypeRepository.Update(serviceIndustryType);
+                    repository.Update(serviceIndustryType);
                     return RedirectToAction("Index");
                 }
             }
@@ -129,7 +134,7 @@ namespace WebOrderingServiceApp.Controllers
             }
             else
             {
-                var serviceIndustryType = serviceIndustryTypeRepository.FindById(id);
+                var serviceIndustryType = repository.FindById(id);
                 if (serviceIndustryType == null)
                 {
                     return HttpNotFound();
@@ -142,8 +147,8 @@ namespace WebOrderingServiceApp.Controllers
         [CustomAuthorize(Roles = "admin")]
         public ActionResult DeleteConfirmed(int id)
         {
-            var serviceIndustryType = serviceIndustryTypeRepository.FindById(id);
-            serviceIndustryTypeRepository.Delete(serviceIndustryType.ServiceIndustryTypeId);
+            var serviceIndustryType = repository.FindById(id);
+            repository.Delete(serviceIndustryType.ServiceIndustryTypeId);
             return RedirectToAction("Index", "ServiceIndustryType");
         }
     }

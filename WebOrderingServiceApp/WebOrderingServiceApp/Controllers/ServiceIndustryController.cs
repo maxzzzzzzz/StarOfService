@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DAL;
+using DAL.Interfaces;
 using Models;
 using WebOrderingServiceApp.Models;
 
@@ -13,8 +14,13 @@ namespace WebOrderingServiceApp.Controllers
     [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
     public class ServiceIndustryController : Controller
     {
-        ServiceIndustryRepository serviceIndustryRepository = new ServiceIndustryRepository();
-        ServiceIndustryTypeRepository serviceIndustryTypeRepository = new ServiceIndustryTypeRepository();
+        IRepository<ServiceIndustry> repository;
+        IRepository<ServiceIndustryType> repositoryServType;
+        public ServiceIndustryController(IRepository<ServiceIndustry> repo, IRepository<ServiceIndustryType> repoServType)
+        {
+            repository = repo;
+            repositoryServType = repoServType;
+        }
         // GET: ServiceIndustry
         public ActionResult Index(int id,string sortOrder)
         {
@@ -43,11 +49,11 @@ namespace WebOrderingServiceApp.Controllers
 
             if (ServiceIndustryTypeId == null)
 
-                ViewBag.ServiceIndustryTypeId = new SelectList(serviceIndustryTypeRepository.GetAll(), "ServiceIndustryTypeId", "Name");
+                ViewBag.ServiceIndustryTypeId = new SelectList(repositoryServType.GetAll(), "ServiceIndustryTypeId", "Name");
 
             else
 
-                ViewBag.ServiceIndustryTypeId = new SelectList(serviceIndustryTypeRepository.GetAll(), "ServiceIndustryTypeId", "Name", ServiceIndustryTypeId);
+                ViewBag.ServiceIndustryTypeId = new SelectList(repositoryServType.GetAll(), "ServiceIndustryTypeId", "Name", ServiceIndustryTypeId);
 
         }
 
@@ -65,7 +71,7 @@ namespace WebOrderingServiceApp.Controllers
 
             if (ModelState.IsValid)
             {
-                serviceIndustryRepository.Create(serviceIndustry);
+                repository.Create(serviceIndustry);
 
                 return RedirectToAction("Index","ServiceIndustryType");
             }
@@ -84,7 +90,7 @@ namespace WebOrderingServiceApp.Controllers
             }
             else
             {
-                var serviceIndustry = serviceIndustryRepository.FindById(id);
+                var serviceIndustry = repository.FindById(id);
                 if (serviceIndustry == null)
                 {
                     return HttpNotFound();
@@ -102,7 +108,7 @@ namespace WebOrderingServiceApp.Controllers
             if (ModelState.IsValid)
             {
 
-                serviceIndustryRepository.Update(serviceIndustry);
+                repository.Update(serviceIndustry);
                 return RedirectToAction("Index","ServiceIndustryType");
             }
             SetTypeViewBag(serviceIndustry.ServiceIndustryTypeId);
@@ -118,7 +124,7 @@ namespace WebOrderingServiceApp.Controllers
             }
             else
             {
-                var serviceIndustry = serviceIndustryRepository.FindById(id);
+                var serviceIndustry = repository.FindById(id);
                 if (serviceIndustry == null)
                 {
                     return HttpNotFound();
@@ -131,8 +137,8 @@ namespace WebOrderingServiceApp.Controllers
         [CustomAuthorize(Roles = "admin")]
         public ActionResult DeleteConfirmed(int id)
         {
-            var serviceIndustry = serviceIndustryRepository.FindById(id);
-            serviceIndustryRepository.Delete(serviceIndustry.ServiceIndustryId);
+            var serviceIndustry = repository.FindById(id);
+            repository.Delete(serviceIndustry.ServiceIndustryId);
             return RedirectToAction("Index", "ServiceIndustryType");
         }
     }
